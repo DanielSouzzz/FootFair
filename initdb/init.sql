@@ -49,6 +49,25 @@ CREATE TABLE IF NOT EXISTS games (
 
     FOREIGN KEY (squad_id) REFERENCES squads(id)
 )
+CREATE TABLE IF NOT EXISTS evaluations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    evaluator_id INT NOT NULL,
+    evaluated_id INT NOT NULL,
+    game_id INT,
+    squad_id INT NOT NULL,
+    speed TINYINT CHECK (speed BETWEEN 0 AND 100),
+    passing TINYINT CHECK (passing BETWEEN 0 AND 100),
+    shooting TINYINT CHECK (shooting BETWEEN 0 AND 100),
+    defense TINYINT CHECK (defense BETWEEN 0 AND 100),
+    stamina TINYINT CHECK (stamina BETWEEN 0 AND 100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (evaluator_id) REFERENCES players(id),
+    FOREIGN KEY (evaluated_id) REFERENCES players(id),
+    FOREIGN KEY (game_id) REFERENCES games(id),
+    FOREIGN KEY (squad_id) REFERENCES squads(id)
+    );
+
 
 
 
