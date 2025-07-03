@@ -6,14 +6,20 @@ CREATE TABLE IF NOT EXISTS players (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     phone VARCHAR(20) NOT NULL,
+    token VARCHAR(100) NOT NULL UNIQUE,
     role TINYINT NOT NULL DEFAULT 1,
-    squad_id INT,
     speed TINYINT CHECK (speed BETWEEN 0 AND 100),
     passing TINYINT CHECK (passing BETWEEN 0 AND 100),
     shooting TINYINT CHECK (shooting BETWEEN 0 AND 100),
     defense TINYINT CHECK (defense BETWEEN 0 AND 100),
     stamina TINYINT CHECK (stamina BETWEEN 0 AND 100)
+);
 
+CREATE TABLE IF NOT EXISTS player_squad (
+    player_id INT NOT NULL,
+    squad_id INT NOT NULL,
+    PRIMARY KEY (player_id, squad_id),
+    FOREIGN KEY (player_id) REFERENCES players(id),
     FOREIGN KEY (squad_id) REFERENCES squads(id)
 );
 
