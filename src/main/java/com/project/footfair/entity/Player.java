@@ -18,10 +18,12 @@ public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
-    private String phone;
+    private String email;
+    private String password;
+
     private int role;
     private int speed;
     private int passing;
