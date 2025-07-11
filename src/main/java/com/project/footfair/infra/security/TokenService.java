@@ -17,13 +17,13 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secretKey;
 
-    public String genereteToken(Player player){
+    public String genereteToken(Player user){
         try {
             Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
             String token = JWT.create()
                     .withIssuer("footFair")
-                    .withSubject(player.getEmail())
+                    .withSubject(user.getEmail())
                     .withExpiresAt(this.generateExpirationDate())
                     .sign(algorithm);
             return token;
