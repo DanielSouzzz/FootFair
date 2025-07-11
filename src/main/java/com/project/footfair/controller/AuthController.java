@@ -1,9 +1,6 @@
 package com.project.footfair.controller;
 
-import com.project.footfair.dto.LoginRequestDTO;
-import com.project.footfair.dto.LoginResponseDTO;
-import com.project.footfair.dto.PlayerResponseDTO;
-import com.project.footfair.dto.RegisterPlayerDTO;
+import com.project.footfair.dto.*;
 import com.project.footfair.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +27,10 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public PlayerResponseDTO register(@RequestBody RegisterPlayerDTO dto){
-        PlayerResponseDTO response = authService.register(dto);
-        return response;
+    public ResponseEntity<LoginResponseDTO> register(@RequestBody RegisterRequestDTO dto, UriComponentsBuilder uriBuilder){
+        LoginResponseDTO responseDTO = authService.register(dto);
+        UriComponents uri = uriBuilder.path("/api/auth/login/{id}").buildAndExpand(responseDTO.getId());
+        return ResponseEntity.created(uri.toUri()).body(responseDTO);
     }
 
 }

@@ -6,7 +6,7 @@ import com.project.footfair.entity.Player;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserLoginMapper {
+public class UserAuthMapper {
         public LoginResponseDTO toResponseDTO(Player entity) {
             if(entity == null){
                 return null;
