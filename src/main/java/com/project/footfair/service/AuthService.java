@@ -1,9 +1,6 @@
 package com.project.footfair.service;
 
-import com.project.footfair.dto.LoginRequestDTO;
-import com.project.footfair.dto.LoginResponseDTO;
-import com.project.footfair.dto.PlayerResponseDTO;
-import com.project.footfair.dto.RegisterPlayerDTO;
+import com.project.footfair.dto.*;
 import com.project.footfair.entity.Player;
 import com.project.footfair.infra.security.TokenService;
 import com.project.footfair.mapper.UserLoginMapper;
@@ -43,7 +40,9 @@ public class AuthService {
     }
 
     @Transactional
-    public PlayerResponseDTO register(RegisterPlayerDTO dto) {
+    public RegisterResponseDTO register(RegisterRequestDTO dto) {
+        Player user =
+
         return null;
     }
 }
