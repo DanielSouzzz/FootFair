@@ -33,9 +33,9 @@ public class AuthService {
         if(!passwordMatches){
             throw new RuntimeException("Senha incorreta.");
         }
-        String token = tokenService.genereteToken(user);
+        String token = this.tokenService.genereteToken(user);
 
-        LoginResponseDTO loginResponseDTO = userAuthMapper.toResponseDTO(user);
+        LoginResponseDTO loginResponseDTO = this.userAuthMapper.toResponseDTO(user);
         loginResponseDTO.setToken(token);
 
         return loginResponseDTO;
@@ -48,7 +48,14 @@ public class AuthService {
             throw new RuntimeException("Email already registered");
         }
         Player user = userAuthMapper.toPlayerEntity(dto);
-        user = userRepository.save(user);
-        return userAuthMapper.toResponseDTO(user);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        this.userRepository.save(user);
+
+        String token = this.tokenService.genereteToken(user);
+
+        LoginResponseDTO loginResponseDTO = this.userAuthMapper.toResponseDTO(user);
+        loginResponseDTO.setToken(token);
+
+        return loginResponseDTO;
     }
 }
