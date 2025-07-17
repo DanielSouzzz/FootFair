@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class AuthService {
     private final PlayerRepository userRepository;
@@ -41,6 +43,10 @@ public class AuthService {
 
     @Transactional
     public LoginResponseDTO register(RegisterRequestDTO dto) {
+        Optional<Player> existingUser = userRepository.findByEmail(dto.getEmail());
+        if (existingUser.isPresent()){
+            throw new RuntimeException("Email already registered");
+        }
         Player user = userAuthMapper.toPlayerEntity(dto);
         user = userRepository.save(user);
         return userAuthMapper.toResponseDTO(user);
