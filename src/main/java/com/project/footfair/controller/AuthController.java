@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-// cadastro/entrada
 @RestController
 @RequestMapping("/api/auth/")
 public class AuthController {
