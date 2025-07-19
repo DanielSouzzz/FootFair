@@ -1,23 +1,24 @@
 services:
   mysql:
-    image: mysql:8.4
-    container_name: mysql-footFair
+    image: mysql:8.0
+    container_name: mysql-footfair
     restart: unless-stopped
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: testdb
+      MYSQL_ROOT_PASSWORD: senha123
+      MYSQL_DATABASE: footfair
+      MYSQL_USER: daniel
+      MYSQL_PASSWORD: senha123
     ports:
       - "3306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
-      - ./initdb:/docker-entrypoint-initdb.d
-    command: --default-authentication-plugin=mysql_native_password
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysql_data:/var/lib/mysql
     networks:
       - backend
 
 volumes:
-  mysql-data:
+  mysql_data:
 
 networks:
-  backend:
-    driver: bridge
+    backend:
+        driver: bridge
