@@ -18,6 +18,16 @@ CREATE TABLE IF NOT EXISTS players (
     stamina TINYINT CHECK (stamina BETWEEN 0 AND 100)
 );
 
+CREATE TABLE IF NOT EXISTS squads (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(20) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    create_player_id INT NOT NULL,
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (create_player_id) REFERENCES players(id)
+    );
+
 CREATE TABLE IF NOT EXISTS player_squad (
     player_id INT NOT NULL,
     squad_id INT NOT NULL,
@@ -40,24 +50,15 @@ CREATE TABLE IF NOT EXISTS positions_player (
     FOREIGN KEY (position_id) REFERENCES positions(id)
 );
 
-CREATE TABLE IF NOT EXISTS squads (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    code VARCHAR(20) NOT NULL UNIQUE,
-    name VARCHAR(100) NOT NULL,
-    create_player_id INT NOT NULL,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (create_player_id) REFERENCES player(id)
-    );
-
 CREATE TABLE IF NOT EXISTS games (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date DATETIME NOT NULL,
     location VARCHAR(100) NOT NULL,
-    squad_id INT NOT NULL UNIQUE
+    squad_id INT NOT NULL UNIQUE,
 
     FOREIGN KEY (squad_id) REFERENCES squads(id)
-)
+);
+
 CREATE TABLE IF NOT EXISTS evaluations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     evaluator_id INT NOT NULL,
