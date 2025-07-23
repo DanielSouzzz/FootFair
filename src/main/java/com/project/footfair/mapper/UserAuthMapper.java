@@ -17,7 +17,8 @@ public class UserAuthMapper {
                     entity.getName(),
                     entity.getEmail(),
                     entity.getToken(),
-                    entity.getRole()
+                    entity.getRole(),
+                    null
             );
         }
         public Player toPlayerEntity(RegisterRequestDTO dto){
