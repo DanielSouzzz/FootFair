@@ -2,6 +2,7 @@ package com.project.footfair.controller;
 
 import com.project.footfair.dto.*;
 import com.project.footfair.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +19,19 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO, UriComponentsBuilder uriBuilder, HttpServletRequest httpRequest){
+        String ip = getClientIP(httpRequest);
+
+
         LoginResponseDTO responseDTO = authService.login(loginRequestDTO);
         UriComponents uri = uriBuilder.path("/api/auth/login/{id}").buildAndExpand(responseDTO.getId());
 
         return ResponseEntity.created(uri.toUri()).body(responseDTO);
+    }
+
+    private String getClientIP(HttpServletRequest httpRequest) {
+        String xf = httpRequest.getHeader("X-Forwarded-For");
+        return xf == null ? httpRequest.getRemoteAddr() : xf.split(",")[0];
     }
 
     @PostMapping("/register")
