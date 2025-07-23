@@ -2,8 +2,10 @@ package com.project.footfair.controller;
 
 import com.project.footfair.dto.*;
 import com.project.footfair.service.AuthService;
+import com.project.footfair.service.LoginAttemptService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -13,15 +15,20 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/api/auth/")
 public class AuthController {
     private final AuthService authService;
+    private final LoginAttemptService loginAttemptService;
 
-    public AuthController(AuthService authService)  {
+    public AuthController(AuthService authService, LoginAttemptService loginAttemptService)  {
         this.authService = authService;
+        this.loginAttemptService = loginAttemptService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO, UriComponentsBuilder uriBuilder, HttpServletRequest httpRequest){
         String ip = getClientIP(httpRequest);
-
+         if (loginAttemptService.isBlocked(ip)){
+             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                     .body(new LoginResponseDTO(null, null, null, null, -1,"Voce excedeu a quantidade maxima de tentativas. Tente novamente mais tarde!"));
+         }
 
         LoginResponseDTO responseDTO = authService.login(loginRequestDTO);
         UriComponents uri = uriBuilder.path("/api/auth/login/{id}").buildAndExpand(responseDTO.getId());

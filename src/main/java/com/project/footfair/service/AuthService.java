@@ -37,6 +37,7 @@ public class AuthService {
 
         LoginResponseDTO loginResponseDTO = this.userAuthMapper.toResponseDTO(user);
         loginResponseDTO.setToken(token);
+        loginResponseDTO.setMensage("Sucess");
 
         return loginResponseDTO;
     }
@@ -55,6 +56,7 @@ public class AuthService {
 
         LoginResponseDTO loginResponseDTO = this.userAuthMapper.toResponseDTO(user);
         loginResponseDTO.setToken(token);
+        loginResponseDTO.setMensage("Sucess");
 
         return loginResponseDTO;
     }
