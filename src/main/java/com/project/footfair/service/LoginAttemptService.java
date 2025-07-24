@@ -15,6 +15,8 @@ public class LoginAttemptService {
 
     public void loginFailed(String ip){
         AttemptInfo info = attempts.getOrDefault(ip, new AttemptInfo());
+        info.increment();
+        attempts.put(ip, info);
     }
 
     public void loginSucceeded(String ip){
