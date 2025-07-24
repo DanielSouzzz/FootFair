@@ -30,10 +30,16 @@ public class AuthController {
                      .body(new LoginResponseDTO(null, null, null, null, -1,"Voce excedeu a quantidade maxima de tentativas. Tente novamente mais tarde!"));
          }
 
-        LoginResponseDTO responseDTO = authService.login(loginRequestDTO);
-        UriComponents uri = uriBuilder.path("/api/auth/login/{id}").buildAndExpand(responseDTO.getId());
+         try {
+             LoginResponseDTO responseDTO = authService.login(loginRequestDTO);
+             UriComponents uri = uriBuilder.path("/api/auth/login/{id}").buildAndExpand(responseDTO.getId());
 
-        return ResponseEntity.created(uri.toUri()).body(responseDTO);
+             return ResponseEntity.created(uri.toUri()).body(responseDTO);
+         }catch (Exception ex){
+             loginAttemptService.loginFailed(ip);
+
+             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponseDTO(null, null, null, null, -1, "Email ou senha invalidos."));
+         }
     }
 
     private String getClientIP(HttpServletRequest httpRequest) {
