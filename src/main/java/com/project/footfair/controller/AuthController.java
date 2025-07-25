@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO, UriComponentsBuilder uriBuilder, HttpServletRequest httpRequest){
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO, HttpServletRequest httpRequest){
         String ip = getClientIP(httpRequest);
          if (loginAttemptService.isBlocked(ip)){
              return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
@@ -32,9 +32,7 @@ public class AuthController {
 
          try {
              LoginResponseDTO responseDTO = authService.login(loginRequestDTO);
-             UriComponents uri = uriBuilder.path("/api/auth/login/{id}").buildAndExpand(responseDTO.getId());
-
-             return ResponseEntity.created(uri.toUri()).body(responseDTO);
+             return ResponseEntity.ok(responseDTO);
          }catch (Exception ex){
              loginAttemptService.loginFailed(ip);
 
