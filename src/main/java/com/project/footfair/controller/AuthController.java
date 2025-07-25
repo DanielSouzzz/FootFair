@@ -32,6 +32,7 @@ public class AuthController {
 
          try {
              LoginResponseDTO responseDTO = authService.login(loginRequestDTO);
+             loginAttemptService.loginSucceeded(ip);
              return ResponseEntity.ok(responseDTO);
          }catch (Exception ex){
              loginAttemptService.loginFailed(ip);
