@@ -17,4 +17,7 @@ public class Squad {
     @Id
     private Long id;
 
+    private Long code;
+    private String name;
+    private Long create_player_id;
 }
