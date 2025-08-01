@@ -1,23 +1,30 @@
 package com.project.footfair.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-@Table(name = "squad")
+@Table(name = "squads")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "squads")
 public class Squad {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long code;
     private String name;
-    private Long create_player_id;
+
+    @ManyToOne
+    @JoinColumn(name = "create_player_id")
+    private Player creator;
+
+    @ManyToMany(mappedBy = "squads")
+    private Set<Player> players = new HashSet<>();
 }

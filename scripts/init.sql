@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS player_squad (
     player_id INT NOT NULL,
     squad_id INT NOT NULL,
     PRIMARY KEY (player_id, squad_id),
+
     FOREIGN KEY (player_id) REFERENCES players(id),
     FOREIGN KEY (squad_id) REFERENCES squads(id)
 );

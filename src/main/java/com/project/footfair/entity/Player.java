@@ -18,6 +18,7 @@ public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     private String name;
@@ -36,9 +37,9 @@ public class Player {
 
     @ManyToMany
     @JoinTable(
-            name = "player_squad",
-            joinColumns = @JoinColumn(name = "player_id"),
-            inverseJoinColumns = @JoinColumn(name = "squad_id")
+            name = "player_squad", // tabela intermediaria
+            joinColumns = @JoinColumn(name = "player_id"), // fk para player
+            inverseJoinColumns = @JoinColumn(name = "squad_id") // fk para squad
     )
     private Set<Squad> squads = new HashSet<>();
 
