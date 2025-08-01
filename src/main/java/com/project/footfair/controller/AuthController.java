@@ -12,7 +12,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/auth/")
+@RequestMapping("/api/auth")
 public class AuthController {
     private final AuthService authService;
     private final LoginAttemptService loginAttemptService;

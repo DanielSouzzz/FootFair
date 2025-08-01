@@ -1,5 +1,20 @@
 package com.project.footfair.controller;
 
+import com.project.footfair.entity.Squad;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 // criar grupo, convidar
+@Controller
+@RequestMapping("/api/squad")
 public class SquadController {
+
+    @PostMapping
+    public ResponseEntity<Squad> createSquad(@Valid @RequestBody Squad squad){
+        return ResponseEntity.status(201).body(SquadService.createSquad(squad));
+    }
 }
