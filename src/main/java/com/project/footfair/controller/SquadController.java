@@ -1,6 +1,7 @@
 package com.project.footfair.controller;
 
 import com.project.footfair.entity.Squad;
+import com.project.footfair.service.SquadService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
