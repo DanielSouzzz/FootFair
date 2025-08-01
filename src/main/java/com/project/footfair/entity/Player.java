@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "squads")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Player {
 
     @Id
