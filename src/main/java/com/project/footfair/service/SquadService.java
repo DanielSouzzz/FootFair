@@ -6,8 +6,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SquadService {
+    private final SquadRepository squadRepository;
+
+    public SquadService(SquadRepository squadRepository) {
+        this.squadRepository = squadRepository;
+    }
 
     public Squad createSquad(Squad squad){
-        Squad newSquad = SquadRepository.save(squad);
+        Squad newSquad = squadRepository.save(squad);
+        return newSquad;
     }
 }

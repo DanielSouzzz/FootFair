@@ -14,8 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api/squad")
 public class SquadController {
 
+    private final SquadService service;
+
+    public SquadController(SquadService service) {
+        this.service = service;
+    }
+
     @PostMapping
     public ResponseEntity<Squad> createSquad(@Valid @RequestBody Squad squad){
-        return ResponseEntity.status(201).body(SquadService.createSquad(squad));
+        return ResponseEntity.status(201).body(service.createSquad(squad));
     }
 }
