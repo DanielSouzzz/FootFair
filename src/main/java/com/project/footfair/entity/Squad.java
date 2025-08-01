@@ -1,11 +1,14 @@
 package com.project.footfair.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "squads")
@@ -19,15 +22,21 @@ public class Squad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long code;
+    @Column(nullable = false, unique = true, updatable = false)
+    private String code;
 
     @NotBlank(message = "Name is mandatory.")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "create_player_id")
-    private Player creator;
+    @NotNull(message = "userId is mandatory.")
+    private Long create_player_id;
 
     @ManyToMany(mappedBy = "squads")
+    @JsonIgnore
     private Set<Player> players = new HashSet<>();
+
+    @PrePersist
+    public void generateCode(){
+        this.code = UUID.randomUUID().toString();
+    }
 }
