@@ -1,5 +1,6 @@
 package com.project.footfair.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,6 +42,7 @@ public class Player {
             joinColumns = @JoinColumn(name = "player_id"), // fk para player
             inverseJoinColumns = @JoinColumn(name = "squad_id") // fk para squad
     )
+    @JsonIgnore
     private Set<Squad> squads = new HashSet<>();
 
     @PrePersist
