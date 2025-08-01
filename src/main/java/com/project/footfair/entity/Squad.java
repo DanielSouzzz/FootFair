@@ -1,6 +1,7 @@
 package com.project.footfair.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.util.HashSet;
@@ -19,6 +20,8 @@ public class Squad {
     private Long id;
 
     private Long code;
+
+    @NotBlank(message = "Name is mandatory.")
     private String name;
 
     @ManyToOne
