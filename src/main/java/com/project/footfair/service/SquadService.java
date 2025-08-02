@@ -18,8 +18,11 @@ public class SquadService {
     }
 
     public Squad createSquad(Squad squad){
-        playerRepository.findById(squad.getCreate_player_id())
+        Player creator = playerRepository.findById(squad.getCreate_player_id())
                 .orElseThrow(()-> new ValidationException("User not found!"));
+
+        squad.getPlayers().add(creator); // adiciona o criador na lista de players do squad
+        creator.getSquads().add(squad); // populando a relacao ManyToMany do lado do squad
 
         Squad newSquad = squadRepository.save(squad);
         return newSquad;
