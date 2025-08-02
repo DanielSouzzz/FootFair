@@ -24,4 +24,5 @@ public class SquadController {
     public ResponseEntity<Squad> createSquad(@Valid @RequestBody Squad squad){
         return ResponseEntity.status(201).body(service.createSquad(squad));
     }
+
 }

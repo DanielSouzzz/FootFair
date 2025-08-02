@@ -23,7 +23,7 @@ public class Squad {
     private Long id;
 
     @Column(nullable = false, unique = true, updatable = false)
-    private String code;
+    private String invite_code;
 
     @NotBlank(message = "Name is mandatory.")
     private String name;
@@ -37,6 +37,6 @@ public class Squad {
 
     @PrePersist
     public void generateCode(){
-        this.code = UUID.randomUUID().toString();
+        this.invite_code = UUID.randomUUID().toString();
     }
 }
