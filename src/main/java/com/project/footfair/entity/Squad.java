@@ -37,6 +37,6 @@ public class Squad {
 
     @PrePersist
     public void generateCode(){
-        this.invite_code = UUID.randomUUID().toString();
+        this.invite_code = UUID.randomUUID().toString().substring(0, 20);
     }
 }
