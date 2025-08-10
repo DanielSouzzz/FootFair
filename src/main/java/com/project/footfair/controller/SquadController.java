@@ -25,4 +25,9 @@ public class SquadController {
         return ResponseEntity.status(201).body(service.createSquad(squad));
     }
 
+    @PostMapping("/join/{code}")
+    public ResponseEntity<Squad> joinSquad(@Valid @RequestBody Squad squad) {
+        return ResponseEntity.ok(squad);
+    }
+
 }

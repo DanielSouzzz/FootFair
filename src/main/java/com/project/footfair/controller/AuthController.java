@@ -47,8 +47,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponseDTO> register(@RequestBody @Valid RegisterRequestDTO dto, UriComponentsBuilder uriBuilder){
-        LoginResponseDTO responseDTO = authService.register(dto);
+    public ResponseEntity<RegisterResponseDTO> register(@RequestBody @Valid RegisterRequestDTO dto, UriComponentsBuilder uriBuilder){
+        RegisterResponseDTO responseDTO = authService.register(dto);
         UriComponents uri = uriBuilder.path("/api/auth/login/{id}").buildAndExpand(responseDTO.getId());
         return ResponseEntity.created(uri.toUri()).body(responseDTO);
     }

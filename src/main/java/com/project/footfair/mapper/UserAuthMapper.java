@@ -2,6 +2,7 @@ package com.project.footfair.mapper;
 
 import com.project.footfair.dto.LoginResponseDTO;
 import com.project.footfair.dto.RegisterRequestDTO;
+import com.project.footfair.dto.RegisterResponseDTO;
 import com.project.footfair.entity.Player;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,18 @@ public class UserAuthMapper {
                     entity.getToken(),
                     entity.getRole(),
                     null
+            );
+        }
+        public RegisterResponseDTO toResponseRegisterDTO(Player entity){
+            if (entity == null){
+                return null;
+            }
+            return new RegisterResponseDTO(
+                    entity.getId(),
+                    entity.getRole(),
+                    entity.getName(),
+                    entity.getEmail(),
+                    entity.getToken()
             );
         }
         public Player toPlayerEntity(RegisterRequestDTO dto){

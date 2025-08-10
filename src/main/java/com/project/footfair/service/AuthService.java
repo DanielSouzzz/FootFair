@@ -43,7 +43,7 @@ public class AuthService {
     }
 
     @Transactional
-    public LoginResponseDTO register(RegisterRequestDTO dto) {
+    public RegisterResponseDTO register(RegisterRequestDTO dto) {
         Optional<Player> existingUser = userRepository.findByEmail(dto.getEmail());
         if (existingUser.isPresent()){
             throw new RuntimeException("Email already registered");
@@ -54,10 +54,10 @@ public class AuthService {
 
         String token = this.tokenService.genereteToken(user);
 
-        LoginResponseDTO loginResponseDTO = this.userAuthMapper.toResponseDTO(user);
-        loginResponseDTO.setToken(token);
-        loginResponseDTO.setMensage("Sucess");
+        RegisterResponseDTO registerResponseDTO = this.userAuthMapper.toResponseRegisterDTO(user);
+        registerResponseDTO.setToken(token);
 
-        return loginResponseDTO;
+
+        return registerResponseDTO;
     }
 }
