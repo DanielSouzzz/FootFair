@@ -1,13 +1,12 @@
 package com.project.footfair.controller;
 
+import com.project.footfair.dto.SquadInviteDTO;
 import com.project.footfair.entity.Squad;
 import com.project.footfair.service.SquadService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 // criar grupo, convidar
 @Controller
@@ -25,9 +24,13 @@ public class SquadController {
         return ResponseEntity.status(201).body(service.createSquad(squad));
     }
 
+    @GetMapping("/{id}/invite")
+    public ResponseEntity<SquadInviteDTO> getInvite(@PathVariable Long id){
+        return ResponseEntity.ok(service.getInvite(id));
+    }
+
     @PostMapping("/join/{code}")
     public ResponseEntity<Squad> joinSquad(@Valid @RequestBody Squad squad) {
         return ResponseEntity.ok(squad);
     }
-
 }
