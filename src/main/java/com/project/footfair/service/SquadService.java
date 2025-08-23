@@ -1,5 +1,6 @@
 package com.project.footfair.service;
 
+import com.project.footfair.dto.SquadInviteDTO;
 import com.project.footfair.entity.Player;
 import com.project.footfair.entity.Squad;
 import com.project.footfair.repository.PlayerRepository;
@@ -26,5 +27,16 @@ public class SquadService {
 
         Squad newSquad = squadRepository.save(squad);
         return newSquad;
+    }
+
+    public SquadInviteDTO getInvite(Long squadId) {
+        Squad squad = squadRepository.findById(squadId)
+                .orElseThrow(() -> new ValidationException("Squad não encontrado"));
+
+        String baseUrl = "https://peladaequilibrada.com/entrar/";
+        return new SquadInviteDTO(
+                squad.getInvite_code(),
+                baseUrl + squad.getInvite_code()
+        );
     }
 }
