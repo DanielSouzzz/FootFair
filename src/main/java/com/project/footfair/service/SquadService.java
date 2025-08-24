@@ -1,15 +1,14 @@
 package com.project.footfair.service;
 
-import com.project.footfair.dto.SquadInviteDTO;
+import com.project.footfair.dto.SquadInviteResponseDTO;
 import com.project.footfair.entity.Player;
 import com.project.footfair.entity.Squad;
 import com.project.footfair.repository.PlayerRepository;
 import com.project.footfair.repository.SquadRepository;
-import jakarta.validation.ValidationException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SquadService {
+public class SquadService extends BaseService{
     private final SquadRepository squadRepository;
     private final PlayerRepository playerRepository;
 
@@ -19,8 +18,8 @@ public class SquadService {
     }
 
     public Squad createSquad(Squad squad){
-        Player creator = playerRepository.findById(squad.getCreate_player_id())
-                .orElseThrow(()-> new ValidationException("User not found!"));
+        Long creatorId = squad.getCreate_player_id();
+        Player creator = super.findEntityById(playerRepository, creatorId, "Player");
 
         squad.getPlayers().add(creator); // adiciona o criador na lista de players do squad
         creator.getSquads().add(squad); // populando a relacao ManyToMany do lado do squad
@@ -29,12 +28,11 @@ public class SquadService {
         return newSquad;
     }
 
-    public SquadInviteDTO getInvite(Long squadId) {
-        Squad squad = squadRepository.findById(squadId)
-                .orElseThrow(() -> new ValidationException("Squad não encontrado"));
+    public SquadInviteResponseDTO getInvite(Long squadId) {
+        Squad squad = super.findEntityById(squadRepository, squadId, "Squad");
 
-        String baseUrl = "https://peladaequilibrada.com/entrar/";
-        return new SquadInviteDTO(
+        String baseUrl = "https://peladaequilibrada.com.br/entrar/";
+        return new SquadInviteResponseDTO(
                 squad.getInvite_code(),
                 baseUrl + squad.getInvite_code()
         );
