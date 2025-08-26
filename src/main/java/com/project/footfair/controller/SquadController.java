@@ -1,6 +1,8 @@
 package com.project.footfair.controller;
 
-import com.project.footfair.dto.SquadInviteDTO;
+import com.project.footfair.dto.JoinSquadRequestDTO;
+import com.project.footfair.dto.JoinSquadResponseDTO;
+import com.project.footfair.dto.SquadInviteResponseDTO;
 import com.project.footfair.entity.Squad;
 import com.project.footfair.service.SquadService;
 import jakarta.validation.Valid;
@@ -25,12 +27,12 @@ public class SquadController {
     }
 
     @GetMapping("/{id}/invite")
-    public ResponseEntity<SquadInviteDTO> getInvite(@PathVariable Long id){
+    public ResponseEntity<SquadInviteResponseDTO> getInvite(@PathVariable Long id){
         return ResponseEntity.ok(service.getInvite(id));
     }
 
     @PostMapping("/join/{code}")
-    public ResponseEntity<Squad> joinSquad(@Valid @RequestBody Squad squad) {
-        return ResponseEntity.ok(squad);
+    public ResponseEntity<JoinSquadResponseDTO> joinSquad(@Valid @RequestBody JoinSquadRequestDTO dto, PathVariable code) {
+        return ResponseEntity.ok(service.joinSquad(dto, code));
     }
 }
