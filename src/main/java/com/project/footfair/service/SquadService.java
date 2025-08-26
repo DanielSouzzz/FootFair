@@ -1,18 +1,25 @@
 package com.project.footfair.service;
 
+import com.project.footfair.dto.JoinSquadRequestDTO;
+import com.project.footfair.dto.JoinSquadResponseDTO;
 import com.project.footfair.dto.SquadInviteResponseDTO;
 import com.project.footfair.entity.Player;
 import com.project.footfair.entity.Squad;
 import com.project.footfair.repository.PlayerRepository;
 import com.project.footfair.repository.SquadRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class SquadService extends BaseService{
+    private final PlayerService playerService;
     private final SquadRepository squadRepository;
     private final PlayerRepository playerRepository;
 
-    public SquadService(SquadRepository squadRepository, PlayerRepository playerRepository) {
+    public SquadService(PlayerService playerService, SquadRepository squadRepository, PlayerRepository playerRepository) {
+        this.playerService = playerService;
         this.squadRepository = squadRepository;
         this.playerRepository = playerRepository;
     }
@@ -36,5 +43,34 @@ public class SquadService extends BaseService{
                 squad.getInvite_code(),
                 baseUrl + squad.getInvite_code()
         );
+    }
+
+    public JoinSquadResponseDTO joinSquad(@Valid JoinSquadRequestDTO dto, PathVariable code) {
+        Squad squad = squadRepository.findInviteCode(code)
+                .orElseThrow(() -> new ValidationException("Invalid invite code!"));
+
+        Player player = playerRepository.findByEmail(dto.getEmail())
+                .orElseThrow(() -> new ValidationException("User not found!"));
+
+        Boolean isPlayerInSquad = playerRepository.findPlayerInSquadById(player.getId());
+
+        if(isPlayerInSquad){
+            return new JoinSquadResponseDTO(null, null, "O player ja faz parte do squad");
+        }
+
+        player.setName(dto.getName());
+        player.setEmail(dto.getEmail());
+
+        Player newPlayer = playerService.createPlayer(player);
+
+
+        var responseDTO = new JoinSquadResponseDTO();
+
+        playerRepository.joinPlayerInSquad(newPlayer.getId(), squad.getId());
+
+        responseDTO.setDataPlayer(newPlayer);
+        responseDTO.setDataSquad(squad);
+
+        return responseDTO;
     }
 }

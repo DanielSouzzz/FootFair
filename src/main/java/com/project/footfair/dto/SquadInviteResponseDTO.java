@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SquadInviteDTO {
+public class SquadInviteResponseDTO {
     private String code;
     private String inviteLink;
 }
