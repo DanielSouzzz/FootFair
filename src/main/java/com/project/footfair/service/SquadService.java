@@ -45,7 +45,7 @@ public class SquadService extends BaseService{
         );
     }
 
-    public JoinSquadResponseDTO joinSquad(@Valid JoinSquadRequestDTO dto, PathVariable code) {
+    public JoinSquadResponseDTO joinSquad(@Valid JoinSquadRequestDTO dto, String code) {
         Squad squad = squadRepository.findInviteCode(code)
                 .orElseThrow(() -> new ValidationException("Invalid invite code!"));
 

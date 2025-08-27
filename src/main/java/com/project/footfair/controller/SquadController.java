@@ -32,7 +32,8 @@ public class SquadController {
     }
 
     @PostMapping("/join/{code}")
-    public ResponseEntity<JoinSquadResponseDTO> joinSquad(@Valid @RequestBody JoinSquadRequestDTO dto, PathVariable code) {
+    public ResponseEntity<JoinSquadResponseDTO> joinSquad(@Valid @RequestBody JoinSquadRequestDTO dto,
+                                                          @PathVariable String code) {
         return ResponseEntity.ok(service.joinSquad(dto, code));
     }
 }
