@@ -52,7 +52,8 @@ public class SquadService extends BaseService{
         Player player = playerRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> new ValidationException("User not found!"));
 
-        Boolean isPlayerInSquad = playerRepository.findPlayerInSquadById(player.getId());
+        Long exists = playerRepository.findPlayerInSquadById(player.getId());
+        boolean isPlayerInSquad = exists == 1L;
 
         if(isPlayerInSquad){
             return new JoinSquadResponseDTO(null, null, "O player ja faz parte do squad");
