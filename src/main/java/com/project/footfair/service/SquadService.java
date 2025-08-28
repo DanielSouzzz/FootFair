@@ -61,11 +61,7 @@ public class SquadService extends BaseService{
             return new JoinSquadResponseDTO(null, null, "O player ja faz parte do squad");
         }
 
-        player.setName(dto.getName());
-        player.setEmail(dto.getEmail());
-
         Player newPlayer = playerService.createPlayer(player);
-
 
         var responseDTO = new JoinSquadResponseDTO();
 
