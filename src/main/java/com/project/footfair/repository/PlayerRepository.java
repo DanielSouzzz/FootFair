@@ -18,7 +18,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
 
     @Modifying
     @Query(value = "insert into player_squad (player_id, squad_id) values (:player_id, :squad_id)", nativeQuery = true)
-    void joinPlayerInSquad(@Param("playerId") Long playerId, @Param("squadId") Long squadId);
+    void joinPlayerInSquad(@Param("player_id") Long player_id, @Param("squad_id") Long squad_id);
 }
 
 
