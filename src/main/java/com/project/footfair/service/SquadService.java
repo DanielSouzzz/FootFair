@@ -10,7 +10,7 @@ import com.project.footfair.repository.SquadRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SquadService extends BaseService{
@@ -24,6 +24,7 @@ public class SquadService extends BaseService{
         this.playerRepository = playerRepository;
     }
 
+    @Transactional
     public Squad createSquad(Squad squad){
         Long creatorId = squad.getCreate_player_id();
         Player creator = super.findEntityById(playerRepository, creatorId, "Player");
@@ -45,12 +46,13 @@ public class SquadService extends BaseService{
         );
     }
 
+    @Transactional
     public JoinSquadResponseDTO joinSquad(@Valid JoinSquadRequestDTO dto, String code) {
         Squad squad = squadRepository.findInviteCode(code)
                 .orElseThrow(() -> new ValidationException("Invalid invite code!"));
 
         Player player = playerRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new ValidationException("User not found!"));
+                .orElseThrow(() -> new ValidationException("Player not found!"));
 
         Long exists = playerRepository.findPlayerInSquadById(player.getId());
         boolean isPlayerInSquad = exists == 1L;
