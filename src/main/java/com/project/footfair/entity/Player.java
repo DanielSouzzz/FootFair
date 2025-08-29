@@ -24,6 +24,7 @@ public class Player {
 
     private String name;
     private String email;
+    @JsonIgnore
     private String password;
 
     private int role;
