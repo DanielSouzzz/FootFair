@@ -7,11 +7,10 @@ import com.project.footfair.entity.Squad;
 import com.project.footfair.service.SquadService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 // criar grupo, convidar
-@Controller
+@RestController
 @RequestMapping("/api/squad")
 public class SquadController {
 
@@ -34,6 +33,7 @@ public class SquadController {
     @PostMapping("/join/{code}")
     public ResponseEntity<JoinSquadResponseDTO> joinSquad(@Valid @RequestBody JoinSquadRequestDTO dto,
                                                           @PathVariable String code) {
-        return ResponseEntity.ok(service.joinSquad(dto, code));
+        JoinSquadResponseDTO response = service.joinSquad(dto, code);
+        return ResponseEntity.status(201).body(response);
     }
 }
