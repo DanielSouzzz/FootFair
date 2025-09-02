@@ -7,6 +7,7 @@ import com.project.footfair.entity.Player;
 import com.project.footfair.entity.Squad;
 import com.project.footfair.repository.PlayerRepository;
 import com.project.footfair.repository.SquadRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import org.springframework.stereotype.Service;
@@ -52,13 +53,13 @@ public class SquadService extends BaseService{
                 .orElseThrow(() -> new ValidationException("Invalid invite code!"));
 
         Player player = playerRepository.findByEmail(dto.getEmail())
-                .orElseThrow(() -> new ValidationException("Player not found!"));
+                .orElseThrow(() -> new EntityNotFoundException("Player not found!"));
 
         Long exists = playerRepository.findPlayerInSquadById(player.getId());
         boolean isPlayerInSquad = exists > 0;
 
         if(isPlayerInSquad){
-            return new JoinSquadResponseDTO(null, null, "O player ja faz parte do squad");
+            throw new ValidationException("O player ja faz parte do squad");
         }
 
         Player newPlayer = playerService.createPlayer(player);
