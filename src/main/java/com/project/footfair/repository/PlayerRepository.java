@@ -14,7 +14,7 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
     Optional<Player> findByEmail(String email);
 
     @Query(value = "select exists(select 1 from player_squad ps where ps.player_id = :player_id)", nativeQuery = true)
-    Long findPlayerInSquadById(@Param("player_id") Long player_id);
+    Long existsPlayerInSquad(@Param("player_id") Long player_id);
 
     @Modifying
     @Query(value = "insert into player_squad (player_id, squad_id) values (:player_id, :squad_id)", nativeQuery = true)
