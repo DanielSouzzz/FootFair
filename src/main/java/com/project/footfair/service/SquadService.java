@@ -5,6 +5,7 @@ import com.project.footfair.dto.JoinSquadResponseDTO;
 import com.project.footfair.dto.SquadInviteResponseDTO;
 import com.project.footfair.entity.Player;
 import com.project.footfair.entity.Squad;
+import com.project.footfair.infra.exception.BusinessException;
 import com.project.footfair.repository.PlayerRepository;
 import com.project.footfair.repository.SquadRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -55,11 +56,11 @@ public class SquadService extends BaseService{
         Player player = playerRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("Player not found!"));
 
-        Long exists = playerRepository.findPlayerInSquadById(player.getId());
+        Long exists = playerRepository.existsPlayerInSquad(player.getId());
         boolean isPlayerInSquad = exists > 0;
 
         if(isPlayerInSquad){
-            throw new ValidationException("O player ja faz parte do squad");
+            throw new BusinessException("O player ja faz parte do squad");
         }
 
         Player newPlayer = playerService.createPlayer(player);
