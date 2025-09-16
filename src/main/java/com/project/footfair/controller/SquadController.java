@@ -5,6 +5,7 @@ import com.project.footfair.dto.JoinSquadResponseDTO;
 import com.project.footfair.dto.SquadInviteResponseDTO;
 import com.project.footfair.entity.Squad;
 import com.project.footfair.service.SquadService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 // criar grupo, convidar
 @RestController
 @RequestMapping("/api/squad")
+@SecurityRequirement(name = "bearer-key")
 public class SquadController {
 
     private final SquadService service;
