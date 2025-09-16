@@ -4,10 +4,10 @@ services:
     container_name: mysql-footfair
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: senha123
-      MYSQL_DATABASE: footfair
-      MYSQL_USER: daniel
-      MYSQL_PASSWORD: senha123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
     ports:
       - "3306:3306"
     volumes:
@@ -20,5 +20,5 @@ volumes:
   mysql_data:
 
 networks:
-    backend:
-        driver: bridge
+  backend:
+    driver: bridge

@@ -22,6 +22,7 @@ O sistema organiza jogadores, monta times equilibrados automaticamente, gera ran
 - **Backend:** Java 17 + Spring Boot
 - **Banco de dados:** MySQL
 - **Arquitetura:** MVC com Controllers, Services, Repositories e DTOs
+- **Docker-compose:** Para o banco de dados MySQL 
 
 ---
 
@@ -29,6 +30,7 @@ O sistema organiza jogadores, monta times equilibrados automaticamente, gera ran
 
 ## 1. Clone o repositório
 git clone https://github.com/danielsouzzz/footfair.git
+cd footfair
 
 ## 2. Configure o banco de dados e variáveis de ambiente
 ### Exemplo (.env ou variáveis do sistema):
@@ -37,9 +39,13 @@ DB_USER=seu_user_db
 DB_PASS=sua_senha_db
 API_SECURITY_TOKEN_SECRET=sua_chave_jwt
 
-## 3. Execute o projeto
+### ⚠️ Adicione o .env no .gitignore para não subir para o GitHub
+
+## 3. Suba o MySQL via Docker Compose
+docker-compose up -d
+
+## 4. Execute o projeto Spring Boot
 mvn spring-boot:run
 
-## 4. Teste os endpoints via Postman ou Swagger:
-### Abra no navegador:
+## 5. Teste os endpoints via Postman ou Swagger:
 http://localhost:8080/swagger-ui/index.html
