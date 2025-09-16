@@ -1,5 +1,9 @@
 # Footfair ⚽
 
+[![Java](https://img.shields.io/badge/Java-17-blue)](https://www.java.com/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.0-brightgreen)](https://spring.io/projects/spring-boot)
+[![Build](https://img.shields.io/badge/Build-Passing-brightgreen)](#)
+
 **Footfair** é uma plataforma para gestão de times de futebol amador.  
 O sistema organiza jogadores, monta times equilibrados automaticamente, gera rankings e facilita a comunicação.
 
