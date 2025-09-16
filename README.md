@@ -24,7 +24,7 @@ O sistema organiza jogadores, monta times equilibrados automaticamente, gera ran
 # 🚀 Como usar Footfair
 
 ## 1. Clone o repositório
-git clone https://github.com/seu-usuario/footfair.git
+git clone https://github.com/danielsouzzz/footfair.git
 
 ## 2. Configure o banco de dados e variáveis de ambiente
 ### Exemplo (.env ou variáveis do sistema):
