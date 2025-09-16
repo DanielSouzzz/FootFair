@@ -5,6 +5,7 @@ import com.project.footfair.dto.JoinSquadResponseDTO;
 import com.project.footfair.dto.SquadInviteResponseDTO;
 import com.project.footfair.entity.Squad;
 import com.project.footfair.service.SquadService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,10 @@ public class SquadController {
         this.service = service;
     }
 
+    @Operation(
+            summary = "Cria um novo squad",
+            description = "Esse endpoint permite criar um novo squad e automaticamente define o criador como administrador."
+    )
     @PostMapping
     public ResponseEntity<Squad> createSquad(@Valid @RequestBody Squad squad){
         return ResponseEntity.status(201).body(service.createSquad(squad));
