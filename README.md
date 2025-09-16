@@ -21,18 +21,21 @@ O sistema organiza jogadores, monta times equilibrados automaticamente, gera ran
 
 ---
 
-## 🚀 Como usar
-1. Clone o repositório:
-```bash
+# 🚀 Como usar Footfair
+
+# 1. Clone o repositório
 git clone https://github.com/seu-usuario/footfair.git
 
-2. Configure o banco de dados e variáveis de ambiente, exemplo:
+# 2. Configure o banco de dados e variáveis de ambiente
+# Exemplo (.env ou variáveis do sistema):
 DB_HOST=jdbc:mysql://localhost:3306/footfair
 DB_USER=seu_user_db
 DB_PASS=sua_senha_db
 API_SECURITY_TOKEN_SECRET=sua_chave_jwt
 
-3. Execute o projeto:
+# 3. Execute o projeto
 mvn spring-boot:run
 
-4. Teste os endpoints via Postman ou Swagger (http://localhost:8080/swagger-ui/index.html)
+# 4. Teste os endpoints via Postman ou Swagger:
+# Abra no navegador:
+http://localhost:8080/swagger-ui/index.html
