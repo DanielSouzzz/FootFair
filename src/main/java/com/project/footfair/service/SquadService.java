@@ -5,7 +5,7 @@ import com.project.footfair.dto.JoinSquadResponseDTO;
 import com.project.footfair.dto.SquadInviteResponseDTO;
 import com.project.footfair.entity.Player;
 import com.project.footfair.entity.Squad;
-import com.project.footfair.infra.exception.BusinessException;
+import com.project.footfair.infra.exception.PlayerAlreadyInSquadException;
 import com.project.footfair.repository.PlayerRepository;
 import com.project.footfair.repository.SquadRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -60,7 +60,7 @@ public class SquadService extends BaseService{
         boolean isPlayerInSquad = exists > 0;
 
         if(isPlayerInSquad){
-            throw new BusinessException("O player ja faz parte do squad");
+            throw new PlayerAlreadyInSquadException(player.getId(), squad.getId());
         }
 
         Player newPlayer = playerService.createPlayer(player);

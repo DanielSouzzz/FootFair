@@ -2,6 +2,7 @@ package com.project.footfair.service;
 
 import com.project.footfair.dto.*;
 import com.project.footfair.entity.Player;
+import com.project.footfair.infra.exception.UserAlreadyExistsException;
 import com.project.footfair.infra.security.TokenService;
 import com.project.footfair.mapper.UserAuthMapper;
 import com.project.footfair.repository.PlayerRepository;
@@ -46,7 +47,7 @@ public class AuthService {
     public RegisterResponseDTO register(RegisterRequestDTO dto) {
         Optional<Player> existingUser = userRepository.findByEmail(dto.getEmail());
         if (existingUser.isPresent()){
-            throw new RuntimeException("Email already registered");
+            throw new UserAlreadyExistsException(dto.getEmail());
         }
         Player user = userAuthMapper.toPlayerEntity(dto);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
